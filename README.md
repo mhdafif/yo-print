@@ -15,6 +15,7 @@ A modern anime search application built with React, TypeScript, and Tailwind CSS
 ## Features
 
 ### Core Requirements ✅
+
 - React 18+ with TypeScript
 - Single Page Application (SPA) with client-side routing
 - Instant search with 250ms debouncing
@@ -25,6 +26,7 @@ A modern anime search application built with React, TypeScript, and Tailwind CSS
 - npm-only package management
 
 ### Bonus Implementation ✅
+
 - **Skeleton Loading**: Animated placeholder cards during search
 - **Error Handling**: Comprehensive error handling for API failures, rate limits, and network issues
 - **Request Cancellation**: AbortController implementation to prevent race conditions
@@ -40,23 +42,27 @@ Deployed to Vercel: [Anime Search App](https://your-app-url.vercel.app)
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 16+ installed
 - npm package manager
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd anime-search-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -98,6 +104,7 @@ The application uses the Jikan API v4 to fetch anime data:
 - **Detail endpoint**: `https://api.jikan.moe/v4/anime/:id/full`
 
 ### Error Handling
+
 - **429 Too Many Requests**: Shows rate limit message
 - **500+ Server Errors**: Displays API issue message
 - **404 Not Found**: Shows no results message
@@ -106,20 +113,24 @@ The application uses the Jikan API v4 to fetch anime data:
 ## Key Features Explained
 
 ### Debounced Instant Search
+
 - 250ms delay before triggering API calls
 - Cancels in-flight requests when user continues typing
 - Prevents unnecessary API calls and improves performance
 
 ### Server-Side Pagination
+
 - 25 anime results per page
 - Next/Previous navigation with page indicators
 - Maintains search query across page changes
 
 ### Race Condition Prevention
+
 - AbortController implementation ensures only the latest response updates state
 - Prevents flicker and outdated results from appearing
 
 ### Responsive Design
+
 - Mobile-first approach
 - Adaptive grid layout (1-5 columns based on screen size)
 - Touch-friendly interface elements
