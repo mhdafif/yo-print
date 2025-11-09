@@ -201,3 +201,5 @@ export const {
   clearSearchHistory,
   clearError,
 } = animeSearchSlice.actions;
+
+export default animeSearchSlice;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AnimeSummary } from "../../types/anime";
 
@@ -11,11 +11,13 @@ interface UseAnimeDetailReturn {
   errorType: "network" | "notFound" | "rateLimit" | "server" | "generic" | null;
   showFloatBackButton: boolean;
   retry: () => void;
+  handleBack: () => void;
 }
 
 const useAnimeDetail = (): UseAnimeDetailReturn => {
   /*======================== Props ======================== */
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate(); // To navigate to the updated URL
 
   /*======================== UseState ======================== */
   const [anime, setAnime] = useState<AnimeSummary | null>(null);
@@ -26,27 +28,7 @@ const useAnimeDetail = (): UseAnimeDetailReturn => {
   >(null);
   const [showFloatBackButton, setShowFloatBackButton] = useState(false);
 
-  /*======================== UseEffect ======================== */
-  // Handle scroll to show/hide floating back button on mobile
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const showPosition = 200; // Show floating back button after scrolling 200px
-      const isMobile = window.innerWidth < 768; // Only on mobile screens
-      setShowFloatBackButton(isMobile && scrollY > showPosition);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll); // Check on resize too
-
-    // Initial check
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
+  /*======================== Handler ======================== */
 
   // Fetch anime details
   const fetchAnimeDetail = async () => {
@@ -92,14 +74,41 @@ const useAnimeDetail = (): UseAnimeDetailReturn => {
     }
   };
 
-  useEffect(() => {
-    fetchAnimeDetail();
-  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
-
   // Retry function
   const retry = () => {
     fetchAnimeDetail();
   };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  /*======================== UseEffect ======================== */
+
+  // Handle scroll to show/hide floating back button on mobile
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const showPosition = 200; // Show floating back button after scrolling 200px
+      const isMobile = window.innerWidth < 768; // Only on mobile screens
+      setShowFloatBackButton(isMobile && scrollY > showPosition);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll); // Check on resize too
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchAnimeDetail();
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /*======================== Return ======================== */
   return {
@@ -109,6 +118,7 @@ const useAnimeDetail = (): UseAnimeDetailReturn => {
     errorType,
     showFloatBackButton,
     retry,
+    handleBack,
   };
 };
 
