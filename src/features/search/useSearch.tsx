@@ -92,15 +92,25 @@ const useSearch = (): UseSearchReturn => {
       const urlQuery = searchParams.get("q");
       if (urlQuery && urlQuery.trim().length >= 3) {
         setSearchInput(urlQuery);
-        dispatch(setQuery(urlQuery));
-        dispatch(setPage(1));
-        shouldFetch.current = true;
+
+        // Use a small timeout to ensure this doesn't conflict with the debounced effect
+        const timer = setTimeout(() => {
+          dispatch(setQuery(urlQuery));
+          dispatch(setPage(1));
+          shouldFetch.current = true;
+        }, 100);
+
+        // Mark as initialized after setting the input, but before the timeout
+        hasInitializedFromURL.current = true;
+        return () => clearTimeout(timer);
+      } else {
         hasInitializedFromURL.current = true;
       }
     }
   }, [searchParams, dispatch]);
 
   useEffect(() => {
+    // Process user input (but not when we just initialized from URL)
     if (debouncedQuery.trim().length >= 3) {
       dispatch(setQuery(debouncedQuery));
       dispatch(setPage(1));

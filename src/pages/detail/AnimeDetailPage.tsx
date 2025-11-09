@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { AnimeDetailSkeleton } from "../../components/anime/AnimeDetailSkeleton";
 import {
   NetworkError,
@@ -10,8 +9,15 @@ import {
 import useAnimeDetail from "../../features/detail/useAnimeDetail";
 
 export function AnimeDetailPage() {
-  const { anime, isLoading, error, errorType, showFloatBackButton, retry } =
-    useAnimeDetail();
+  const {
+    anime,
+    isLoading,
+    error,
+    errorType,
+    showFloatBackButton,
+    retry,
+    handleBack,
+  } = useAnimeDetail();
 
   if (isLoading) {
     return <AnimeDetailSkeleton />;
@@ -35,9 +41,9 @@ export function AnimeDetailPage() {
   return (
     <div className="min-h-screen bg-slate-900">
       <div className="container mx-auto px-4 py-8">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
+        <div
+          onClick={handleBack}
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors cursor-pointer"
         >
           <svg
             className="w-5 h-5"
@@ -53,7 +59,7 @@ export function AnimeDetailPage() {
             />
           </svg>
           Back to Search
-        </Link>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
@@ -204,9 +210,9 @@ export function AnimeDetailPage() {
 
       {/* Floating Back Button for Mobile */}
       {showFloatBackButton && (
-        <Link
-          to="/"
-          className="fixed top-6 left-6 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 z-50 flex items-center justify-center md:hidden"
+        <div
+          onClick={handleBack}
+          className="fixed top-4 left-4 w-10 h-10 bg-slate-600 text-white rounded-md shadow-lg hover:bg-slate-700 transition-all duration-300 z-50 flex items-center justify-center md:hidden cursor-pointer"
           aria-label="Back to Search"
         >
           <svg
@@ -222,7 +228,7 @@ export function AnimeDetailPage() {
               d="M15 19l-7-7 7-7"
             />
           </svg>
-        </Link>
+        </div>
       )}
     </div>
   );

@@ -40,7 +40,7 @@ export function SearchPage() {
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               placeholder="Search for anime..."
-              className="w-full px-4 py-3 pr-12 bg-slate-800 text-white rounded-lg border border-slate-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-full px-4 py-3 pr-12 bg-slate-800 text-white rounded-lg border border-slate-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 z-[2] relative"
             />
             {searchInput && (
               <button
@@ -68,7 +68,7 @@ export function SearchPage() {
             {isSearchFocused &&
               searchInput.length > 0 &&
               searchInput.length < 3 && (
-                <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-slate-800 border border-slate-700 rounded-lg z-50 shadow-lg">
+                <div className="absolute top-[70%] left-0 right-0 mt-2 p-3 bg-slate-800 border border-slate-700 rounded-b-lg z-[1] shadow-lg">
                   <p className="text-slate-400 text-sm">
                     Type at least 3 characters to search
                   </p>
@@ -389,17 +389,6 @@ export function SearchPage() {
                     </svg>
                   </button>
                 )}
-
-                {/* Absolute positioned requirement text with border in sticky search */}
-                {isSearchFocused &&
-                  searchInput.length > 0 &&
-                  searchInput.length < 3 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 p-2 bg-slate-800 border border-slate-700 rounded-lg z-50 shadow-lg">
-                      <p className="text-slate-400 text-xs">
-                        Type at least 3 characters to search
-                      </p>
-                    </div>
-                  )}
               </div>
             </div>
           </div>
