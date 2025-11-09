@@ -109,4 +109,16 @@ describe("useAnimeDetail", () => {
 
     expect(typeof result.current.retry).toBe("function");
   });
+
+  it("should handle missing anime ID", async () => {
+    const { result } = renderHook(() => useAnimeDetail(), {
+      wrapper: ({ children }) => (
+        <MemoryRouter initialEntries={["/"]}>{children}</MemoryRouter>
+      ),
+    });
+
+    // When there's no anime ID, the hook should be in initial loading state
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.anime).toBeNull();
+  });
 });

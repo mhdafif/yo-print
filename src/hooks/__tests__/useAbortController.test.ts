@@ -42,4 +42,49 @@ describe("useAbortController", () => {
     expect(firstController).toBeInstanceOf(AbortController);
     expect(secondController).toBeInstanceOf(AbortController);
   });
+
+  it("should abort previous controller when creating new one", () => {
+    const { result } = renderHook(() => useAbortController());
+
+    const { newAbortController } = result.current;
+    const firstController = newAbortController();
+
+    expect(firstController.signal.aborted).toBe(false);
+
+    const secondController = newAbortController();
+
+    expect(firstController.signal.aborted).toBe(true);
+    expect(secondController.signal.aborted).toBe(false);
+  });
+
+  it("should cleanup and abort current controller", () => {
+    const { result } = renderHook(() => useAbortController());
+
+    const { newAbortController, cleanup } = result.current;
+    const controller = newAbortController();
+
+    expect(controller.signal.aborted).toBe(false);
+
+    cleanup();
+
+    expect(controller.signal.aborted).toBe(true);
+  });
+
+  it("should handle cleanup when no controller exists", () => {
+    const { result } = renderHook(() => useAbortController());
+
+    const { cleanup } = result.current;
+
+    expect(() => cleanup()).not.toThrow();
+  });
+
+  it("should handle cleanup when controller is already null", () => {
+    const { result } = renderHook(() => useAbortController());
+
+    const { newAbortController, cleanup } = result.current;
+    newAbortController();
+    cleanup();
+
+    expect(() => cleanup()).not.toThrow();
+  });
 });
