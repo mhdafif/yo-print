@@ -7,7 +7,6 @@ import animeSearchSlice, {
   clearSearchHistory,
   clearError,
   fetchAnimeList,
-  initialState,
 } from "../animeSearchSlice";
 import { AnimeSummary } from "../../../types/anime";
 
@@ -194,7 +193,13 @@ describe("animeSearchSlice", () => {
   });
 
   it("should handle fetchAnimeList.pending", () => {
-    store.dispatch(fetchAnimeList.pending("test", { query: "test", page: 1, sortBy: "default" }));
+    store.dispatch(
+      fetchAnimeList.pending("test", {
+        query: "test",
+        page: 1,
+        sortBy: "default",
+      })
+    );
     const state = store.getState().animeSearch;
     expect(state.isLoading).toBe(true);
     expect(state.error).toBe(null);
@@ -214,7 +219,7 @@ describe("animeSearchSlice", () => {
     };
 
     const axios = (await import("axios")).default;
-    (axios.get as any).mockResolvedValue(mockResponse);
+    (axios.get as jest.Mock).mockResolvedValue(mockResponse);
 
     await store.dispatch(
       fetchAnimeList({ query: "test", page: 1, sortBy: "default" })
@@ -242,7 +247,9 @@ describe("animeSearchSlice", () => {
 
     const state = store.getState().animeSearch;
     expect(state.isLoading).toBe(false);
-    expect(state.error).toBe("Failed to fetch anime data. Please check your connection.");
+    expect(state.error).toBe(
+      "Failed to fetch anime data. Please check your connection."
+    );
     expect(state.results).toEqual([]);
   });
 });

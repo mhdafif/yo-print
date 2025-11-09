@@ -7,6 +7,16 @@ import {
   GenericError,
 } from "../../components/ui/ErrorDisplay";
 import useAnimeDetail from "../../features/detail/useAnimeDetail";
+import { BackButton } from "../../features/detail/components/BackButton";
+import { FloatingBackButton } from "../../features/detail/components/FloatingBackButton";
+import { AnimeImage } from "../../features/detail/components/AnimeImage";
+import { AnimeTitles } from "../../features/detail/components/AnimeTitles";
+import { AnimeStats } from "../../features/detail/components/AnimeStats";
+import { AnimeGenres } from "../../features/detail/components/AnimeGenres";
+import { AnimeBasicInfo } from "../../features/detail/components/AnimeBasicInfo";
+import { AnimeSynopsis } from "../../features/detail/components/AnimeSynopsis";
+import { AnimeBackground } from "../../features/detail/components/AnimeBackground";
+import { AnimeProductionInfo } from "../../features/detail/components/AnimeProductionInfo";
 
 export function AnimeDetailPage() {
   const {
@@ -41,195 +51,25 @@ export function AnimeDetailPage() {
   return (
     <div className="min-h-screen bg-slate-900">
       <div className="container mx-auto px-4 py-8">
-        <div
-          onClick={handleBack}
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors cursor-pointer"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to Search
-        </div>
+        <BackButton onBack={handleBack} />
 
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-1">
-            <div className="sticky top-8">
-              <img
-                src={anime.images.jpg.large_image_url}
-                alt={anime.title}
-                className="w-full rounded-lg shadow-2xl"
-              />
-            </div>
-          </div>
+          <AnimeImage anime={anime} />
 
           <div className="md:col-span-2 space-y-6">
-            <div>
-              <h1 className="text-4xl font-bold text-white mb-2">
-                {anime.title}
-              </h1>
-              {anime.title_english && anime.title_english !== anime.title && (
-                <h2 className="text-xl text-slate-400 mb-2">
-                  {anime.title_english}
-                </h2>
-              )}
-              {anime.title_japanese && (
-                <h3 className="text-lg text-slate-500 mb-4">
-                  {anime.title_japanese}
-                </h3>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-slate-400">Score:</span>
-                <span className="text-yellow-500 font-bold">
-                  ★ {anime.score?.toFixed(2) || "N/A"}
-                </span>
-                <span className="text-slate-500">
-                  ({anime.scored_by?.toLocaleString()} users)
-                </span>
-              </div>
-              {anime.rank && (
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-400">Rank:</span>
-                  <span className="text-white font-bold">#{anime.rank}</span>
-                </div>
-              )}
-              <div className="flex items-center gap-2">
-                <span className="text-slate-400">Popularity:</span>
-                <span className="text-white font-bold">
-                  #{anime.popularity}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {anime.genres.map((genre) => (
-                <span
-                  key={genre.mal_id}
-                  className="px-3 py-1 bg-slate-700 text-slate-300 rounded-full text-sm"
-                >
-                  {genre.name}
-                </span>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-slate-400">Type:</span>
-                <p className="text-white font-medium">{anime.type}</p>
-              </div>
-              <div>
-                <span className="text-slate-400">Episodes:</span>
-                <p className="text-white font-medium">
-                  {anime.episodes || "Unknown"}
-                </p>
-              </div>
-              <div>
-                <span className="text-slate-400">Status:</span>
-                <p className="text-white font-medium">{anime.status}</p>
-              </div>
-              <div>
-                <span className="text-slate-400">Year:</span>
-                <p className="text-white font-medium">
-                  {anime.year || "Unknown"}
-                </p>
-              </div>
-            </div>
-
-            {anime.synopsis && (
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-3">
-                  Synopsis
-                </h3>
-                <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">
-                  {anime.synopsis}
-                </p>
-              </div>
-            )}
-
-            {anime.background && (
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-3">
-                  Background
-                </h3>
-                <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">
-                  {anime.background}
-                </p>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              {anime.studios && anime.studios.length > 0 && (
-                <div>
-                  <span className="text-slate-400">Studios:</span>
-                  <p className="text-white font-medium">
-                    {anime.studios.map((studio) => studio.name).join(", ")}
-                  </p>
-                </div>
-              )}
-
-              {anime.producers && anime.producers.length > 0 && (
-                <div>
-                  <span className="text-slate-400">Producers:</span>
-                  <p className="text-white font-medium">
-                    {anime.producers
-                      .map((producer) => producer.name)
-                      .join(", ")}
-                  </p>
-                </div>
-              )}
-
-              {anime.duration && (
-                <div>
-                  <span className="text-slate-400">Duration:</span>
-                  <p className="text-white font-medium">{anime.duration}</p>
-                </div>
-              )}
-
-              {anime.rating && (
-                <div>
-                  <span className="text-slate-400">Rating:</span>
-                  <p className="text-white font-medium">{anime.rating}</p>
-                </div>
-              )}
-            </div>
+            <AnimeTitles anime={anime} />
+            <AnimeStats anime={anime} />
+            <AnimeGenres anime={anime} />
+            <AnimeBasicInfo anime={anime} />
+            <AnimeSynopsis anime={anime} />
+            <AnimeBackground anime={anime} />
+            <AnimeProductionInfo anime={anime} />
           </div>
         </div>
       </div>
 
       {/* Floating Back Button for Mobile */}
-      {showFloatBackButton && (
-        <div
-          onClick={handleBack}
-          className="fixed top-4 left-4 w-10 h-10 bg-slate-600 text-white rounded-md shadow-lg hover:bg-slate-700 transition-all duration-300 z-50 flex items-center justify-center md:hidden cursor-pointer"
-          aria-label="Back to Search"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </div>
-      )}
+      {showFloatBackButton && <FloatingBackButton onBack={handleBack} />}
     </div>
   );
 }

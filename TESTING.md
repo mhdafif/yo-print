@@ -49,26 +49,31 @@ src/
 ## 🎯 Test Coverage
 
 ### **Custom Hooks**
+
 - ✅ `useDebouncedSearch` - Debouncing functionality
 - ✅ `useAbortController` - Request cancellation
 - ✅ `useSearch` - Search state management
 - ✅ `useAnimeDetail` - Anime detail state management
 
 ### **Redux Slice**
+
 - ✅ `animeSearchSlice` - Search state actions and reducers
 
 ### **Components**
+
 - ✅ `AnimeCard` - Anime card rendering and interactions
 - ✅ `ErrorDisplay` - Error UI components
 
 ## 🔧 Configuration
 
 ### **Vitest Config** (`vitest.config.ts`)
+
 - Environment: jsdom
 - Setup file: `src/test/setup.ts`
 - Path aliases: `@/` → `src/`
 
 ### **Test Setup** (`src/test/setup.ts`)
+
 - Jest DOM matchers
 - Window API mocks (scroll, history, etc.)
 - URL class mocking
@@ -118,33 +123,41 @@ describe("mySlice", () => {
 ## 🚀 Running Tests
 
 ### **Development Mode**
+
 ```bash
 npm run test
 ```
+
 - Runs tests in watch mode
 - Re-runs on file changes
 - Good for TDD workflow
 
 ### **Interactive Mode**
+
 ```bash
 npm run test:ui
 ```
+
 - Visual test runner interface
 - Filter and run specific tests
 - See coverage in real-time
 
 ### **CI Mode**
+
 ```bash
 npm run test:run
 ```
+
 - Single test run
 - Exit with proper status codes
 - Suitable for CI/CD pipelines
 
 ### **Coverage Report**
+
 ```bash
 npm run test:coverage
 ```
+
 - Generate coverage report
 - Shows test coverage percentage
 - Identifies untested code

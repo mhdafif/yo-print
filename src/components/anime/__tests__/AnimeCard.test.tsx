@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
@@ -179,7 +180,9 @@ describe("AnimeCard", () => {
 
     render(<AnimeCard anime={animeWithLongTitle} />, { wrapper });
 
-    const title = screen.getByText("This is a very long anime title that should be truncated");
+    const title = screen.getByText(
+      "This is a very long anime title that should be truncated"
+    );
     expect(title).toBeInTheDocument();
     // The truncation is handled by CSS, so we can't easily test the visual truncation
     // but we can verify the full title is present in the DOM
@@ -213,7 +216,6 @@ describe("AnimeCard", () => {
   it("should have proper ARIA labels", () => {
     render(<AnimeCard anime={mockAnime} />, { wrapper });
 
-    const link = screen.getByRole("link");
     // The component doesn't have explicit aria-label but the img has alt text
     const image = screen.getByRole("img");
     expect(image).toHaveAttribute("alt", "Test Anime");

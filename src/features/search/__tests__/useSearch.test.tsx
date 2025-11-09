@@ -4,7 +4,9 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { MemoryRouter } from "react-router-dom";
 import useSearch from "../useSearch";
-import animeSearchSlice, { addToSearchHistory } from "../../anime/animeSearchSlice";
+import animeSearchSlice, {
+  addToSearchHistory,
+} from "../../anime/animeSearchSlice";
 
 // Mock axios
 vi.mock("axios", () => ({
@@ -170,7 +172,9 @@ describe("useSearch", () => {
       </Provider>
     );
 
-    const { result } = renderHook(() => useSearch(), { wrapper: customWrapper });
+    const { result } = renderHook(() => useSearch(), {
+      wrapper: customWrapper,
+    });
 
     // Add some history first
     act(() => {

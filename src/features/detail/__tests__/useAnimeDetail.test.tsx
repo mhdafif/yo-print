@@ -39,72 +39,10 @@ Object.defineProperty(window, "innerWidth", {
   configurable: true,
 });
 
-const mockAnimeData = {
-  mal_id: 1,
-  title: "Test Anime",
-  title_english: "Test Anime English",
-  title_japanese: "テストアニメ",
-  type: "TV",
-  episodes: 12,
-  status: "Completed",
-  airing: false,
-  aired: {
-    from: "2023-01-01",
-    to: "2023-03-01",
-    prop: {
-      from: { day: 1, month: 1, year: 2023 },
-      to: { day: 1, month: 3, year: 2023 },
-      string: "Jan 1, 2023 to Mar 1, 2023",
-    },
-  },
-  duration: "24 min per ep",
-  rating: "PG-13",
-  score: 8.5,
-  scored_by: 10000,
-  rank: 100,
-  popularity: 1000,
-  members: 50000,
-  favorites: 1000,
-  synopsis: "Test synopsis",
-  background: "",
-  season: "winter",
-  year: 2023,
-  images: {
-    jpg: {
-      image_url: "https://example.com/image.jpg",
-      small_image_url: "https://example.com/small.jpg",
-      large_image_url: "https://example.com/large.jpg",
-    },
-    webp: {
-      image_url: "https://example.com/image.webp",
-      small_image_url: "https://example.com/small.webp",
-      large_image_url: "https://example.com/large.webp",
-    },
-  },
-  trailer: {
-    youtube_id: "",
-    url: "",
-    embed_url: "",
-  },
-  approved: true,
-  titles: [],
-  title_synonyms: [],
-  source: "Manga",
-  genres: [],
-  explicit_genres: [],
-  themes: [],
-  demographics: [],
-  relations: [],
-  theme: {
-    openings: [],
-    endings: [],
-  },
-  external: [],
-  streaming: [],
-};
-
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <Provider store={configureStore({ reducer: { test: (state = {}) => state } })}>
+  <Provider
+    store={configureStore({ reducer: { test: (state = {}) => state } })}
+  >
     <MemoryRouter initialEntries={["/anime/1"]}>{children}</MemoryRouter>
   </Provider>
 );

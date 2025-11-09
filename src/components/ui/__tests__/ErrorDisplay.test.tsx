@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
@@ -25,7 +26,9 @@ describe("ErrorDisplay", () => {
 
   it("should show retry button when provided", () => {
     const mockRetry = vi.fn();
-    render(<ErrorDisplay error="Test error" onRetry={mockRetry} showRetry />, { wrapper });
+    render(<ErrorDisplay error="Test error" onRetry={mockRetry} showRetry />, {
+      wrapper,
+    });
 
     expect(screen.getByText("Try Again")).toBeInTheDocument();
     expect(screen.getByText("Back to Search")).toBeInTheDocument();
@@ -35,17 +38,19 @@ describe("ErrorDisplay", () => {
     const mockRetry = vi.fn();
     const user = userEvent.setup();
 
-    render(
-      <ErrorDisplay error="Test error" onRetry={mockRetry} showRetry />,
-      { wrapper }
-    );
+    render(<ErrorDisplay error="Test error" onRetry={mockRetry} showRetry />, {
+      wrapper,
+    });
 
     await user.click(screen.getByText("Try Again"));
     expect(mockRetry).toHaveBeenCalledTimes(1);
   });
 
   it("should not show retry button when showRetry is false", () => {
-    render(<ErrorDisplay error="Test error" onRetry={vi.fn()} showRetry={false} />, { wrapper });
+    render(
+      <ErrorDisplay error="Test error" onRetry={vi.fn()} showRetry={false} />,
+      { wrapper }
+    );
 
     expect(screen.queryByText("Try Again")).not.toBeInTheDocument();
     expect(screen.getByText("Back to Search")).toBeInTheDocument();
@@ -96,7 +101,13 @@ describe("NotFoundError", () => {
     render(<NotFoundError />, { wrapper });
 
     const badge = screen.getByText("404").parentElement;
-    expect(badge).toHaveClass("bg-slate-800", "rounded-full", "flex", "items-center", "justify-center");
+    expect(badge).toHaveClass(
+      "bg-slate-800",
+      "rounded-full",
+      "flex",
+      "items-center",
+      "justify-center"
+    );
   });
 });
 
@@ -166,7 +177,12 @@ describe("ErrorDisplay Navigation", () => {
     );
 
     const link = screen.getByRole("link", { name: "Back to Search" });
-    expect(link).toHaveClass("bg-slate-700", "text-white", "rounded-lg", "hover:bg-slate-600");
+    expect(link).toHaveClass(
+      "bg-slate-700",
+      "text-white",
+      "rounded-lg",
+      "hover:bg-slate-600"
+    );
   });
 });
 

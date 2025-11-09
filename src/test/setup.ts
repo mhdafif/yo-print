@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
-import { afterEach } from "vitest";
+import { afterEach, vi } from "vitest";
 
 // Cleanup after each test
 afterEach(() => {
@@ -66,9 +66,11 @@ class MockURL {
       set: (key: string, value: string) => mockSearchParams.set(key, value),
       delete: (key: string) => mockSearchParams.delete(key),
       has: (key: string) => mockSearchParams.has(key),
-      toString: () => new URLSearchParams(Array.from(mockSearchParams)).toString(),
+      toString: () =>
+        new URLSearchParams(Array.from(mockSearchParams)).toString(),
     };
   }
 }
 
-global.URL = MockURL as any;
+// @ts-expect-error - Global URL assignment requires type assertion
+global.URL = MockURL;
